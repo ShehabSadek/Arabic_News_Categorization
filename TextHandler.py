@@ -22,22 +22,16 @@ def preprocess_text(words):
     stemmer = ISRIStemmer()
     words=remove_english_text(words)
     for text in words:
-        # Tokenize the text
         tokens = araby.tokenize(text)
         
-        # Filter out English words
         arabic_tokens = [token for token in tokens if not token.isascii()]
-        
-        # Apply stemming and disambiguation
+    
         stemmed_tokens = [stemmer.stem(token) for token in arabic_tokens]
         
-        # Filter out stopwords and non-alphabetic tokens
         filtered_tokens = [token for token in stemmed_tokens if token not in stop_words and token.isalpha()]
         
-        # Remove diacritics from tokens
         filtered_tokens = [strip_tashkeel(token) for token in filtered_tokens]
         
-        # Join the preprocessed tokens
         preprocessed_text.append(' '.join(filtered_tokens))
     
     return preprocessed_text
